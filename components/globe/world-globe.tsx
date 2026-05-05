@@ -75,6 +75,20 @@ type MarkerProps = {
   onSelect: (entry: GlobeEntry) => void;
 };
 
+type PointerMissEvent = {
+  clientX?: number;
+  clientY?: number;
+  offsetX?: number;
+  offsetY?: number;
+  pointerType?: string;
+};
+
+type PointerMissResolver = (event: PointerMissEvent) => GlobeEntry | null;
+
+type GlobeSceneProps = WorldGlobeProps & {
+  registerPointerMissResolver: (resolver: PointerMissResolver | null) => void;
+};
+
 function latLonToVector3(
   latitude: number,
   longitude: number,
@@ -593,8 +607,9 @@ function GlobeSceneContents({
   focusRequestKey = 0,
   frontMostRequestKey = 0,
   onSelectEntry,
-}: WorldGlobeProps) {
-  const { camera } = useThree();
+  registerPointerMissResolver,
+}: GlobeSceneProps) {
+  const { camera, gl, size } = useThree();
   const controlsRef = useRef<any>(null);
   const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const desiredOrbitRef = useRef<{ azimuthal: number; polar: number } | null>(null);
@@ -615,6 +630,72 @@ function GlobeSceneContents({
       })),
     [entries],
   );
+
+  const resolveNearestMarker = useCallback(
+    (event: PointerMissEvent) => {
+      const bounds = gl.domElement.getBoundingClientRect();
+      const pointerX =
+        typeof event.offsetX === "number" ? event.offsetX : event.clientX != null
+          ? event.clientX - bounds.left
+          : null;
+      const pointerY =
+        typeof event.offsetY === "number" ? event.offsetY : event.clientY != null
+          ? event.clientY - bounds.top
+          : null;
+
+      if (pointerX == null || pointerY == null) {
+        return null;
+      }
+
+      const thresholdPx = event.pointerType === "touch" ? 81 : 48;
+      const cameraDirection = camera.position.clone().normalize();
+      const globeRotation = new Euler(GLOBE_TILT_X, 0, 0);
+
+      let bestEntry: GlobeEntry | null = null;
+      let bestDistance = Number.POSITIVE_INFINITY;
+
+      for (const { entry, position } of markerPositions) {
+        if (
+          selectedRegion !== "All" &&
+          normalizeRegion(entry.region) !== selectedRegion
+        ) {
+          continue;
+        }
+
+        const direction = position
+          .clone()
+          .normalize()
+          .applyEuler(globeRotation)
+          .normalize();
+
+        // Ignore markers on the back half of the globe when snapping a tap.
+        if (direction.dot(cameraDirection) <= 0) {
+          continue;
+        }
+
+        const projected = position.clone().applyEuler(globeRotation).project(camera);
+        const screenX = (projected.x * 0.5 + 0.5) * size.width;
+        const screenY = (-projected.y * 0.5 + 0.5) * size.height;
+        const distance = Math.hypot(screenX - pointerX, screenY - pointerY);
+
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestEntry = entry;
+        }
+      }
+
+      return bestDistance <= thresholdPx ? bestEntry : null;
+    },
+    [camera, gl.domElement, markerPositions, selectedRegion, size.height, size.width],
+  );
+
+  useEffect(() => {
+    registerPointerMissResolver(resolveNearestMarker);
+
+    return () => {
+      registerPointerMissResolver(null);
+    };
+  }, [registerPointerMissResolver, resolveNearestMarker]);
 
   const signalInteraction = useCallback((cancelFocus = false) => {
     if (cancelFocus) {
@@ -847,27 +928,41 @@ function GlobeSceneContents({
   );
 }
 
-function GlobeScene(props: WorldGlobeProps) {
-  return (
-    <Canvas
-      dpr={[1, 1.75]}
-      gl={{ antialias: true, alpha: true }}
-      onPointerMissed={() => {
-        props.onSelectEntry(null);
-      }}
-    >
-      <GlobeSceneContents {...props} />
-    </Canvas>
-  );
-}
-
 export function WorldGlobe(props: WorldGlobeProps) {
+  const pointerMissResolverRef = useRef<PointerMissResolver | null>(null);
+
   return (
     <div className="relative overflow-hidden rounded-[1.5rem] border border-cyan-300/15 bg-slate-950/45 shadow-panel sm:rounded-[2rem]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(67,212,255,0.12),_transparent_50%)]" />
       <div className="absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-cyan-100/80 to-transparent sm:inset-x-8" />
       <div className="relative h-[62svh] min-h-[22rem] w-full touch-none sm:h-[72svh] sm:min-h-[28rem] lg:h-[86vh] lg:min-h-[32rem]">
-        <GlobeScene {...props} />
+        <Canvas
+          dpr={[1, 1.75]}
+          gl={{ antialias: true, alpha: true }}
+          onPointerMissed={(event) => {
+            const pointerEvent = event as MouseEvent & {
+              offsetX?: number;
+              offsetY?: number;
+              pointerType?: string;
+            };
+            const matchedEntry = pointerMissResolverRef.current?.({
+              clientX: pointerEvent.clientX,
+              clientY: pointerEvent.clientY,
+              offsetX: pointerEvent.offsetX,
+              offsetY: pointerEvent.offsetY,
+              pointerType: pointerEvent.pointerType,
+            });
+
+            props.onSelectEntry(matchedEntry ?? null);
+          }}
+        >
+          <GlobeSceneContents
+            {...props}
+            registerPointerMissResolver={(resolver) => {
+              pointerMissResolverRef.current = resolver;
+            }}
+          />
+        </Canvas>
       </div>
     </div>
   );
