@@ -863,10 +863,10 @@ function GlobeScene(props: WorldGlobeProps) {
 
 export function WorldGlobe(props: WorldGlobeProps) {
   return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-cyan-300/15 bg-slate-950/45 shadow-panel">
+    <div className="relative overflow-hidden rounded-[1.5rem] border border-cyan-300/15 bg-slate-950/45 shadow-panel sm:rounded-[2rem]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(67,212,255,0.12),_transparent_50%)]" />
-      <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-cyan-100/80 to-transparent" />
-      <div className="relative h-[78vh] min-h-[32rem] w-full touch-none sm:h-[82vh] lg:h-[86vh]">
+      <div className="absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-cyan-100/80 to-transparent sm:inset-x-8" />
+      <div className="relative h-[62svh] min-h-[22rem] w-full touch-none sm:h-[72svh] sm:min-h-[28rem] lg:h-[86vh] lg:min-h-[32rem]">
         <GlobeScene {...props} />
       </div>
     </div>

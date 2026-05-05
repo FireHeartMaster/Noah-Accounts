@@ -37,7 +37,7 @@ export function EntryDetailsPanel({
 }: EntryDetailsPanelProps) {
   if (!entry) {
     return (
-      <Card className="h-full min-h-[18rem] border-cyan-300/15 bg-slate-950/52">
+      <Card className="min-w-0 min-h-[16rem] overflow-hidden border-cyan-300/15 bg-slate-950/52 lg:h-full lg:min-h-[18rem]">
         <CardHeader className="gap-3">
           <Badge>Details Panel</Badge>
           <CardTitle className="text-base text-cyan-50">
@@ -71,9 +71,9 @@ export function EntryDetailsPanel({
   };
 
   return (
-    <Card className="h-full min-h-[18rem] border-cyan-300/15 bg-slate-950/58">
+    <Card className="min-w-0 min-h-[16rem] overflow-hidden border-cyan-300/15 bg-slate-950/58 lg:h-full lg:min-h-[18rem]">
       <CardHeader className="gap-3 border-b border-cyan-300/10 pb-4">
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <Badge>{displayRegion}</Badge>
           <span className="text-[11px] uppercase tracking-[0.24em] text-cyan-50/48">
             {entry.date}

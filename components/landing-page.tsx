@@ -68,7 +68,13 @@ export function LandingPage() {
         </section>
 
         <section className="grid flex-1 gap-4 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-5">
-          <div className="flex min-h-0 flex-col">
+          <div className="flex min-h-0 min-w-0 flex-col">
+            <div className="mb-3 px-2 sm:px-4 lg:hidden">
+              <div className="rounded-[1.25rem] border border-cyan-300/12 bg-slate-950/38 p-3 shadow-panel backdrop-blur-xl sm:p-4">
+                <RegionFilter selected={selectedRegion} onSelect={setSelectedRegion} />
+              </div>
+            </div>
+
             <div className="relative">
               <WorldGlobe
                 entries={globeEntries}
@@ -80,14 +86,14 @@ export function LandingPage() {
                 onSelectEntry={setSelectedEntry}
               />
 
-              <div className="pointer-events-none absolute inset-x-2 top-2 z-10 sm:inset-x-4 sm:top-4 lg:inset-x-6 lg:top-6">
+              <div className="pointer-events-none absolute inset-x-2 top-2 z-10 hidden sm:inset-x-4 sm:top-4 lg:block lg:inset-x-6 lg:top-6">
                 <div className="pointer-events-auto mx-auto w-full max-w-4xl rounded-[1.5rem] border border-cyan-300/12 bg-slate-950/38 p-3 shadow-panel backdrop-blur-xl sm:p-4">
                   <RegionFilter selected={selectedRegion} onSelect={setSelectedRegion} />
                 </div>
               </div>
             </div>
 
-            <div className="relative z-10 mx-2 -mt-32 sm:mx-4 sm:-mt-36 lg:mx-6 lg:-mt-32">
+            <div className="mt-3 px-2 sm:px-4 lg:relative lg:z-10 lg:mx-6 lg:-mt-32 lg:px-0">
               <div className="grid gap-3 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)_auto]">
                 <div className="pointer-events-auto lg:max-w-[22rem]">
                   <StatusPanel
@@ -99,25 +105,25 @@ export function LandingPage() {
 
                 <div className="hidden lg:block" />
 
-                <div className="pointer-events-auto ml-auto flex justify-end">
-                  <div className="flex flex-wrap items-center justify-end gap-3 rounded-[1.25rem] border border-cyan-300/15 bg-slate-950/45 p-2.5 shadow-panel backdrop-blur-xl">
-                    <label className="flex cursor-pointer items-center gap-2 rounded-full border border-cyan-300/12 bg-slate-950/45 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-cyan-100/72">
+                <div className="pointer-events-auto flex justify-start lg:ml-auto lg:justify-end">
+                  <div className="flex w-full flex-wrap items-center justify-start gap-2 rounded-[1rem] border border-cyan-300/15 bg-slate-950/45 p-2 shadow-panel backdrop-blur-xl sm:w-auto sm:gap-3 sm:rounded-[1.25rem] sm:p-2.5 sm:justify-end">
+                    <label className="flex cursor-pointer items-center gap-2 rounded-full border border-cyan-300/12 bg-slate-950/45 px-2.5 py-1.5 text-[9px] uppercase tracking-[0.16em] text-cyan-100/72 sm:px-3 sm:py-2 sm:text-[10px] sm:tracking-[0.2em]">
                       <input
                         type="checkbox"
                         checked={idleRotationEnabled}
                         onChange={(event) => setIdleRotationEnabled(event.target.checked)}
-                        className="h-3.5 w-3.5 rounded border-cyan-300/30 bg-slate-950 accent-cyan-300"
+                        className="h-3 w-3 rounded border-cyan-300/30 bg-slate-950 accent-cyan-300 sm:h-3.5 sm:w-3.5"
                       />
                       Idle rotation
                     </label>
-                    <div className="flex items-center gap-3">
-                      <div className="px-2 text-[10px] uppercase tracking-[0.24em] text-cyan-100/56">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <div className="hidden px-2 text-[10px] uppercase tracking-[0.24em] text-cyan-100/56 sm:block">
                         Focus
                       </div>
                       <Button
                         variant="outline"
                         size="sm"
-                        className="justify-between"
+                        className="justify-between px-3 text-[10px] normal-case tracking-[0.08em] sm:px-4 sm:text-xs sm:uppercase sm:tracking-[0.22em]"
                         onClick={() => {
                           setFrontMostRequestKey((current) => current + 1);
                           setFocusRequestKey((current) => current + 1);
@@ -133,10 +139,12 @@ export function LandingPage() {
             </div>
           </div>
 
-          <EntryDetailsPanel
-            entry={selectedEntry}
-            selectedRegion={selectedRegion}
-          />
+          <div className="min-w-0">
+            <EntryDetailsPanel
+              entry={selectedEntry}
+              selectedRegion={selectedRegion}
+            />
+          </div>
         </section>
       </div>
     </main>
