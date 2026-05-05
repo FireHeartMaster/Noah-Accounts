@@ -30,7 +30,14 @@ import { geoEquirectangular, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import landTopology from "world-atlas/land-110m.json";
 
-import { GlobeEntry, GlobeRegion, normalizeRegion } from "@/types/globe";
+import {
+  AppLocale,
+  GlobeEntry,
+  GlobeRegion,
+  localizeEntry,
+  normalizeRegion,
+} from "@/types/globe";
+import { localizedRegionName, uiText } from "@/data/ui-translations";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -61,6 +68,7 @@ type WorldGlobeProps = {
   entries: GlobeEntry[];
   selectedEntry: GlobeEntry | null;
   selectedRegion: "All" | GlobeRegion;
+  selectedLocale: AppLocale;
   idleRotationEnabled?: boolean;
   focusRequestKey?: number;
   frontMostRequestKey?: number;
@@ -512,8 +520,19 @@ function GlobeMarker({
   );
 }
 
-function SelectionConnector({ entry }: { entry: GlobeEntry }) {
-  const displayRegion = normalizeRegion(entry.region) ?? entry.region;
+function SelectionConnector({
+  entry,
+  selectedLocale,
+}: {
+  entry: GlobeEntry;
+  selectedLocale: AppLocale;
+}) {
+  const text = uiText(selectedLocale);
+  const localizedEntry = localizeEntry(entry, selectedLocale);
+  const normalizedRegion = normalizeRegion(localizedEntry.region);
+  const displayRegion = normalizedRegion
+    ? localizedRegionName(normalizedRegion, selectedLocale)
+    : localizedEntry.region;
   const markerPoint = useMemo(
     () => latLonToVector3(entry.latitude, entry.longitude, GLOBE_RADIUS, MARKER_ALTITUDE),
     [entry.latitude, entry.longitude],
@@ -563,21 +582,24 @@ function SelectionConnector({ entry }: { entry: GlobeEntry }) {
               <Badge>{displayRegion}</Badge>
             </div>
             <CardTitle className="text-sm leading-5 text-cyan-50 sm:text-base">
-              {entry.title}
+              {localizedEntry.title}
             </CardTitle>
             <p className="text-[11px] uppercase tracking-[0.22em] text-cyan-200/72 sm:text-xs">
-              {entry.subtitle}
+              {localizedEntry.subtitle}
             </p>
             <CardDescription className="text-xs leading-5 sm:text-sm">
-              {entry.text}
+              {localizedEntry.text}
             </CardDescription>
             <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-50/48">
-              {entry.date}
+              {localizedEntry.date}
             </p>
           </CardHeader>
-          {entry.links?.length ? (
+          {localizedEntry.links?.length ? (
             <CardContent className="relative flex flex-col gap-2 px-4 pb-4">
-              {entry.links.map((link, index) => (
+              <div className="text-[10px] uppercase tracking-[0.22em] text-cyan-100/52">
+                {text.someReferences}
+              </div>
+              {localizedEntry.links.map((link, index) => (
                 <Button
                   key={`${link.url}-${index}`}
                   variant="outline"
@@ -603,6 +625,7 @@ function GlobeSceneContents({
   entries,
   selectedEntry,
   selectedRegion,
+  selectedLocale,
   idleRotationEnabled = true,
   focusRequestKey = 0,
   frontMostRequestKey = 0,
@@ -909,7 +932,12 @@ function GlobeSceneContents({
           );
         })}
 
-        {selectedEntry ? <SelectionConnector entry={selectedEntry} /> : null}
+        {selectedEntry ? (
+          <SelectionConnector
+            entry={selectedEntry}
+            selectedLocale={selectedLocale}
+          />
+        ) : null}
       </group>
 
       <OrbitControls

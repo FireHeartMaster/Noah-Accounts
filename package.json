@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "next typegen && tsc --noEmit"
+    "typecheck": "next typegen && tsc --noEmit",
+    "translations:status": "node scripts/translation-status.cjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.0.0",

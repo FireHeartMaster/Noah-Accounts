@@ -1,0 +1,185 @@
+{
+  "sourceFile": "data/globe-entries.ts",
+  "supportedLocales": [
+    "es",
+    "pt-BR",
+    "it",
+    "fr",
+    "nl",
+    "de",
+    "ja",
+    "zh-CN",
+    "hi",
+    "ru"
+  ],
+  "batchSize": 10,
+  "completedBatches": [
+    {
+      "batchNumber": 1,
+      "range": "1-10",
+      "entryIds": [
+        "myth-001-atrahasis",
+        "myth-002-ziusudra-in-the-sumerian-flood-story",
+        "myth-003-manu-and-the-fish",
+        "myth-004-the-great-flood-of-gun-and-yu",
+        "myth-005-nuu-and-the-flood-of-kai-a-ka-hinalii",
+        "myth-006-qat-and-the-banks-islands-deluge",
+        "myth-007-nanabozho-and-the-anishinaabe-great-flood",
+        "myth-008-tata-and-nene-in-the-leyenda-de-los-soles",
+        "myth-009-the-huarochiri-flood",
+        "myth-010-deucalion-and-pyrrha"
+      ],
+      "status": "completed"
+    },
+    {
+      "batchNumber": 2,
+      "range": "11-20",
+      "entryIds": [
+        "myth-011-miao-brother-sister-flood-and-gourd-refuge",
+        "myth-012-ifugao-flood-of-wigan-bugan-and-kabigat",
+        "myth-013-hopi-flood-of-the-third-world",
+        "myth-014-wisakedjak-flood",
+        "myth-015-canari-flood-of-huacayanan",
+        "myth-016-tamanduare-flood",
+        "myth-017-trentren-vilu-and-caicai-vilu",
+        "myth-018-ruahatu-flood",
+        "myth-019-ndengei-flood",
+        "myth-020-bergelmir-and-the-blood-flood-of-ymir"
+      ],
+      "status": "completed"
+    },
+    {
+      "batchNumber": 3,
+      "range": "21-30",
+      "entryIds": [
+        "myth-021-mokdoryeong-and-the-great-flood",
+        "myth-022-story-of-the-flood",
+        "myth-023-flood-of-jiangliang-and-jiangmei",
+        "myth-024-ji-ya-ya-he-flood-myth",
+        "myth-025-taoyuan-flood-myth",
+        "myth-026-tsou-flood-myth",
+        "myth-027-da-niao-wan-flood-myth",
+        "myth-028-ma-lan-flood-myth",
+        "myth-029-tlingit-flood-myth",
+        "myth-030-nu-mohk-muck-a-nah-flood-myth"
+      ],
+      "status": "completed"
+    },
+    {
+      "batchNumber": 4,
+      "range": "31-40",
+      "entryIds": [
+        "myth-031-atayal-flood-of-dabajian-mountain",
+        "myth-032-saisiyat-a-la-wan-deluge",
+        "myth-033-bunun-da-ma-luo-wang-flood",
+        "myth-034-bunun-ren-lun-flood",
+        "myth-035-paiwan-southern-tribe-flood-of-da-luo-fan",
+        "myth-036-rukai-ma-ka-deluge",
+        "myth-037-rukai-dona-mandaulan-great-flood",
+        "myth-038-amis-da-ba-lang-rectangular-mortar-flood",
+        "myth-039-amis-dou-lan-mortar-flood",
+        "myth-040-yami-yi-mo-lu-de-island-flood"
+      ],
+      "status": "completed"
+    },
+    {
+      "batchNumber": 5,
+      "range": "41-50",
+      "entryIds": [
+        "myth-041-pingpu-ba-ze-hai-sibling-flood",
+        "myth-042-nu-flood-eight",
+        "myth-043-drung-flood-nine",
+        "myth-044-pamichali-flood",
+        "myth-045-makah-deluge-legend",
+        "myth-046-quilliute-fragmentary-deluge-myth",
+        "myth-047-hoh-quileute-a-story-of-the-flood",
+        "myth-048-klallam-the-flood",
+        "myth-049-viracocha-flood-unu-pachakuti",
+        "myth-050-muisca-flood-of-chibchacum-and-bochica"
+      ],
+      "status": "completed"
+    },
+    {
+      "batchNumber": 6,
+      "range": "51-60",
+      "entryIds": [
+        "myth-051-story-of-the-deluge",
+        "myth-052-the-flood",
+        "myth-053-the-flood",
+        "myth-054-noah-s-flood",
+        "myth-055-m-l-leqala-deluge",
+        "myth-056-m-l-flood-transformation",
+        "myth-057-the-flood",
+        "myth-058-the-flood",
+        "myth-059-lizard-variant-of-the-flood",
+        "myth-060-the-making-of-the-earth"
+      ],
+      "status": "completed"
+    },
+    {
+      "batchNumber": 7,
+      "range": "61-70",
+      "entryIds": [
+        "myth-061-languages-confused-on-a-mountain",
+        "myth-062-reed-refuge-flood",
+        "myth-063-haida-deluge-and-raven-renewal",
+        "myth-064-the-flood-story",
+        "myth-065-the-flood-story",
+        "myth-066-ata-flood",
+        "myth-067-mandaya-flood",
+        "myth-068-kabigat-deluge-variant",
+        "myth-069-tinguian-kaboniyan-flood",
+        "myth-070-great-storm-and-seven-storey-house"
+      ],
+      "status": "completed"
+    },
+    {
+      "batchNumber": 8,
+      "range": "71-80",
+      "entryIds": [
+        "myth-071-old-woman-on-a-raft",
+        "myth-072-bigiri-bunari-flood-of-burning-oil",
+        "myth-073-parawhenuamea",
+        "myth-074-tohe-tika-flood-tree-myth",
+        "myth-075-murray-hume-deluge",
+        "myth-076-a-legend-of-the-great-flood",
+        "myth-077-raudalo-stops-the-flood",
+        "myth-078-abaia-eel-flood",
+        "myth-079-probable-creation-and-flood-myth",
+        "myth-080-sea-dyak-serpent-flood"
+      ],
+      "status": "completed"
+    },
+    {
+      "batchNumber": 9,
+      "range": "81-86",
+      "entryIds": [
+        "myth-081-cherokee-deluge",
+        "myth-082-marerewana-and-the-flood",
+        "myth-083-lisu-gourd-flood",
+        "myth-084-pawpaw-nan-chaung-and-chang-hko",
+        "myth-085-bhil-fish-box-deluge",
+        "myth-086-kamar-bamboo-box-deluge"
+      ],
+      "status": "completed"
+    }
+  ],
+  "currentBatch": {
+    "batchNumber": 9,
+    "range": "81-86",
+    "entryIds": [
+      "myth-081-cherokee-deluge",
+      "myth-082-marerewana-and-the-flood",
+      "myth-083-lisu-gourd-flood",
+      "myth-084-pawpaw-nan-chaung-and-chang-hko",
+      "myth-085-bhil-fish-box-deluge",
+      "myth-086-kamar-bamboo-box-deluge"
+    ],
+    "status": "completed"
+  },
+  "notes": [
+    "Translations are added directly into globe-entries.ts under entry.translations.",
+    "Each batch is source-informed and covers title, subtitle, text, date, and details fields when present.",
+    "On future continuation requests, resume from currentBatch first, then advance to the next untranslated batch."
+  ]
+}

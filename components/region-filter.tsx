@@ -3,13 +3,16 @@
 import { REGIONS, GlobeRegion } from "@/types/globe";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { AppLocale } from "@/types/globe";
+import { localizedRegionName } from "@/data/ui-translations";
 
 type RegionFilterProps = {
   selected: "All" | GlobeRegion;
   onSelect: (region: "All" | GlobeRegion) => void;
+  locale: AppLocale;
 };
 
-export function RegionFilter({ selected, onSelect }: RegionFilterProps) {
+export function RegionFilter({ selected, onSelect, locale }: RegionFilterProps) {
   return (
     <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 sm:mx-0 sm:flex-wrap sm:justify-center sm:gap-3 sm:overflow-visible sm:px-0 sm:pb-0">
       {REGIONS.map((region) => {
@@ -26,7 +29,7 @@ export function RegionFilter({ selected, onSelect }: RegionFilterProps) {
               active && "border-cyan-100/30 bg-cyan-300/20 text-white",
             )}
           >
-            {region}
+            {localizedRegionName(region, locale)}
           </Button>
         );
       })}

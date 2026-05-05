@@ -13,14 +13,23 @@ import {
 } from "@/components/globe/world-globe";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { GlobeEntry, GlobeRegion, normalizeRegion } from "@/types/globe";
+import { uiText } from "@/data/ui-translations";
+import {
+  AppLocale,
+  GlobeEntry,
+  GlobeRegion,
+  LOCALE_OPTIONS,
+  normalizeRegion,
+} from "@/types/globe";
 
 export function LandingPage() {
   const [selectedRegion, setSelectedRegion] = useState<"All" | GlobeRegion>("All");
   const [selectedEntry, setSelectedEntry] = useState<GlobeEntry | null>(null);
+  const [selectedLocale, setSelectedLocale] = useState<AppLocale>("en");
   const [idleRotationEnabled, setIdleRotationEnabled] = useState(true);
   const [focusRequestKey, setFocusRequestKey] = useState(0);
   const [frontMostRequestKey, setFrontMostRequestKey] = useState(0);
+  const text = uiText(selectedLocale);
 
   const visibleEntries = useMemo(
     () =>
@@ -51,19 +60,36 @@ export function LandingPage() {
           <div className="space-y-2">
             <Badge className="animate-pulse-soft gap-2 border-cyan-100/20 bg-cyan-300/12">
               <Sparkles className="h-3.5 w-3.5" />
-              Holographic World Interface
+              {text.holographicWorldInterface}
             </Badge>
             <div>
               <h1 className="font-display text-sm uppercase tracking-[0.28em] text-cyan-50 sm:text-base">
-                Global signal map
+                {text.globalSignalMap}
               </h1>
               <p className="mt-1 max-w-2xl text-xs leading-6 text-cyan-50/62 sm:text-sm">
-                Drag, zoom, filter regions, and inspect connected markers.
+                {text.dragZoomFilter}
               </p>
             </div>
           </div>
-          <div className="hidden rounded-full border border-cyan-300/15 bg-slate-950/35 px-4 py-2 text-[10px] uppercase tracking-[0.28em] text-cyan-100/56 backdrop-blur-xl sm:block">
-            Interactive 3D globe
+          <div className="flex flex-col items-end gap-2">
+            <div className="hidden rounded-full border border-cyan-300/15 bg-slate-950/35 px-4 py-2 text-[10px] uppercase tracking-[0.28em] text-cyan-100/56 backdrop-blur-xl sm:block">
+              {text.interactive3dGlobe}
+            </div>
+            <label className="flex items-center gap-2 rounded-full border border-cyan-300/15 bg-slate-950/45 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-cyan-100/72 backdrop-blur-xl">
+              <span className="hidden sm:inline">{text.language}</span>
+              <select
+                value={selectedLocale}
+                onChange={(event) => setSelectedLocale(event.target.value as AppLocale)}
+                className="rounded-full border border-cyan-300/12 bg-slate-950/85 px-3 py-1 text-[11px] normal-case tracking-normal text-cyan-50 outline-none transition hover:border-cyan-300/30"
+                aria-label={text.selectLanguage}
+              >
+                {LOCALE_OPTIONS.map((locale) => (
+                  <option key={locale.value} value={locale.value}>
+                    {locale.label}
+                  </option>
+                ))}
+              </select>
+            </label>
           </div>
         </section>
 
@@ -71,7 +97,11 @@ export function LandingPage() {
           <div className="flex min-h-0 min-w-0 flex-col">
             <div className="mb-3 px-2 sm:px-4 lg:hidden">
               <div className="rounded-[1.25rem] border border-cyan-300/12 bg-slate-950/38 p-3 shadow-panel backdrop-blur-xl sm:p-4">
-                <RegionFilter selected={selectedRegion} onSelect={setSelectedRegion} />
+                <RegionFilter
+                  selected={selectedRegion}
+                  onSelect={setSelectedRegion}
+                  locale={selectedLocale}
+                />
               </div>
             </div>
 
@@ -80,6 +110,7 @@ export function LandingPage() {
                 entries={globeEntries}
                 selectedEntry={selectedEntry}
                 selectedRegion={selectedRegion}
+                selectedLocale={selectedLocale}
                 idleRotationEnabled={idleRotationEnabled}
                 focusRequestKey={focusRequestKey}
                 frontMostRequestKey={frontMostRequestKey}
@@ -88,7 +119,11 @@ export function LandingPage() {
 
               <div className="pointer-events-none absolute inset-x-2 top-2 z-10 hidden sm:inset-x-4 sm:top-4 lg:block lg:inset-x-6 lg:top-6">
                 <div className="pointer-events-auto mx-auto w-full max-w-4xl rounded-[1.5rem] border border-cyan-300/12 bg-slate-950/38 p-3 shadow-panel backdrop-blur-xl sm:p-4">
-                  <RegionFilter selected={selectedRegion} onSelect={setSelectedRegion} />
+                  <RegionFilter
+                    selected={selectedRegion}
+                    onSelect={setSelectedRegion}
+                    locale={selectedLocale}
+                  />
                 </div>
               </div>
             </div>
@@ -100,6 +135,7 @@ export function LandingPage() {
                     selectedRegion={selectedRegion}
                     visibleCount={visibleEntries.length}
                     totalCount={globeEntries.length}
+                    locale={selectedLocale}
                   />
                 </div>
 
@@ -114,11 +150,11 @@ export function LandingPage() {
                         onChange={(event) => setIdleRotationEnabled(event.target.checked)}
                         className="h-3 w-3 rounded border-cyan-300/30 bg-slate-950 accent-cyan-300 sm:h-3.5 sm:w-3.5"
                       />
-                      Idle rotation
+                      {text.idleRotation}
                     </label>
                     <div className="flex flex-wrap items-center gap-3">
                       <div className="hidden px-2 text-[10px] uppercase tracking-[0.24em] text-cyan-100/56 sm:block">
-                        Focus
+                        {text.focus}
                       </div>
                       <Button
                         variant="outline"
@@ -129,7 +165,7 @@ export function LandingPage() {
                           setFocusRequestKey((current) => current + 1);
                         }}
                       >
-                        Front-most record
+                        {text.frontMostRecord}
                         <ChevronRight className="h-4 w-4" />
                       </Button>
                     </div>
@@ -142,6 +178,7 @@ export function LandingPage() {
           <div className="min-w-0">
             <EntryDetailsPanel
               entry={selectedEntry}
+              selectedLocale={selectedLocale}
               selectedRegion={selectedRegion}
             />
           </div>
