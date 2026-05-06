@@ -571,7 +571,7 @@ function SelectionConnector({
         position={cardPosition.toArray()}
         className="pointer-events-auto"
         style={{
-          transform: "translate3d(9px, calc(-100% - 9px), 0)",
+          transform: "translate3d(9px, -50%, 0)",
         }}
       >
         <Card className="relative w-[min(11.55rem,calc(50vw-1rem))] overflow-hidden border-cyan-200/25 bg-slate-950/88 shadow-glow sm:w-[min(23.1rem,calc(100vw-2rem))]">
@@ -581,22 +581,22 @@ function SelectionConnector({
             <div>
               <Badge>{displayRegion}</Badge>
             </div>
-            <CardTitle className="text-[8px] leading-3 text-cyan-50 sm:text-base sm:leading-5">
+            <CardTitle className="text-[12px] leading-4 text-cyan-50 sm:text-base sm:leading-5">
               {localizedEntry.title}
             </CardTitle>
-            <p className="text-[6px] uppercase tracking-[0.18em] text-cyan-200/72 sm:text-xs sm:tracking-[0.22em]">
+            <p className="text-[9px] uppercase tracking-[0.18em] text-cyan-200/72 sm:text-xs sm:tracking-[0.22em]">
               {localizedEntry.subtitle}
             </p>
-            <CardDescription className="text-[6px] leading-3 sm:text-sm sm:leading-5">
+            <CardDescription className="text-[9px] leading-4 sm:text-sm sm:leading-5">
               {localizedEntry.text}
             </CardDescription>
-            <p className="text-[5px] uppercase tracking-[0.18em] text-cyan-50/48 sm:text-[10px] sm:tracking-[0.24em]">
+            <p className="text-[8px] uppercase tracking-[0.18em] text-cyan-50/48 sm:text-[10px] sm:tracking-[0.24em]">
               {localizedEntry.date}
             </p>
           </CardHeader>
           {localizedEntry.links?.length ? (
             <CardContent className="relative flex flex-col gap-1.5 px-2 pb-2 sm:gap-2 sm:px-4 sm:pb-4">
-              <div className="text-[5px] uppercase tracking-[0.18em] text-cyan-100/52 sm:text-[10px] sm:tracking-[0.22em]">
+              <div className="text-[8px] uppercase tracking-[0.18em] text-cyan-100/52 sm:text-[10px] sm:tracking-[0.22em]">
                 {text.someReferences}
               </div>
               {localizedEntry.links.map((link, index) => (
@@ -604,10 +604,10 @@ function SelectionConnector({
                   key={`${link.url}-${index}`}
                   variant="outline"
                   size="sm"
-                  className="h-auto w-full items-start justify-between gap-1.5 px-2 py-1 text-left text-[5px] sm:gap-3 sm:px-3 sm:py-2 sm:text-[10px]"
+                  className="h-auto w-full items-start justify-between gap-1.5 px-2 py-1 text-left text-[8px] sm:gap-3 sm:px-3 sm:py-2 sm:text-[10px]"
                   onClick={() => window.open(link.url, "_blank", "noopener,noreferrer")}
                 >
-                  <span className="min-w-0 flex-1 whitespace-normal break-words leading-3 sm:leading-5">
+                  <span className="min-w-0 flex-1 whitespace-normal break-words leading-4 sm:leading-5">
                     {link.label}
                   </span>
                   <ExternalLink className="mt-0.5 h-2 w-2 shrink-0 sm:h-3.5 sm:w-3.5" />
@@ -880,8 +880,8 @@ function GlobeSceneContents({
     const currentAzimuthal = controls.getAzimuthalAngle();
     const currentPolar = controls.getPolarAngle();
     const nextAzimuthal =
-      currentAzimuthal + shortestAngleDelta(currentAzimuthal, targetOrbit.azimuthal) * Math.min(1, delta * 3.2);
-    const nextPolar = MathUtils.damp(currentPolar, targetOrbit.polar, 5.5, delta);
+      currentAzimuthal + shortestAngleDelta(currentAzimuthal, targetOrbit.azimuthal) * Math.min(1, delta * 4.8);
+    const nextPolar = MathUtils.damp(currentPolar, targetOrbit.polar, 8.25, delta);
 
     controls.setAzimuthalAngle(nextAzimuthal);
     controls.setPolarAngle(nextPolar);
