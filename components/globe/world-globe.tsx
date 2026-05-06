@@ -571,32 +571,32 @@ function SelectionConnector({
         position={cardPosition.toArray()}
         className="pointer-events-auto"
         style={{
-          transform: "translate3d(18px, calc(-100% - 18px), 0)",
+          transform: "translate3d(9px, calc(-100% - 9px), 0)",
         }}
       >
-        <Card className="relative w-[min(23.1rem,calc(100vw-2rem))] overflow-hidden border-cyan-200/25 bg-slate-950/88 shadow-glow">
+        <Card className="relative w-[min(11.55rem,calc(50vw-1rem))] overflow-hidden border-cyan-200/25 bg-slate-950/88 shadow-glow sm:w-[min(23.1rem,calc(100vw-2rem))]">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-100 to-transparent" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(94,231,255,0.16),_transparent_48%)]" />
-          <CardHeader className="relative gap-2 p-4">
+          <CardHeader className="relative gap-1.5 p-2 sm:gap-2 sm:p-4">
             <div>
               <Badge>{displayRegion}</Badge>
             </div>
-            <CardTitle className="text-sm leading-5 text-cyan-50 sm:text-base">
+            <CardTitle className="text-[8px] leading-3 text-cyan-50 sm:text-base sm:leading-5">
               {localizedEntry.title}
             </CardTitle>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-cyan-200/72 sm:text-xs">
+            <p className="text-[6px] uppercase tracking-[0.18em] text-cyan-200/72 sm:text-xs sm:tracking-[0.22em]">
               {localizedEntry.subtitle}
             </p>
-            <CardDescription className="text-xs leading-5 sm:text-sm">
+            <CardDescription className="text-[6px] leading-3 sm:text-sm sm:leading-5">
               {localizedEntry.text}
             </CardDescription>
-            <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-50/48">
+            <p className="text-[5px] uppercase tracking-[0.18em] text-cyan-50/48 sm:text-[10px] sm:tracking-[0.24em]">
               {localizedEntry.date}
             </p>
           </CardHeader>
           {localizedEntry.links?.length ? (
-            <CardContent className="relative flex flex-col gap-2 px-4 pb-4">
-              <div className="text-[10px] uppercase tracking-[0.22em] text-cyan-100/52">
+            <CardContent className="relative flex flex-col gap-1.5 px-2 pb-2 sm:gap-2 sm:px-4 sm:pb-4">
+              <div className="text-[5px] uppercase tracking-[0.18em] text-cyan-100/52 sm:text-[10px] sm:tracking-[0.22em]">
                 {text.someReferences}
               </div>
               {localizedEntry.links.map((link, index) => (
@@ -604,13 +604,13 @@ function SelectionConnector({
                   key={`${link.url}-${index}`}
                   variant="outline"
                   size="sm"
-                  className="h-auto w-full items-start justify-between gap-3 px-3 py-2 text-left text-[10px]"
+                  className="h-auto w-full items-start justify-between gap-1.5 px-2 py-1 text-left text-[5px] sm:gap-3 sm:px-3 sm:py-2 sm:text-[10px]"
                   onClick={() => window.open(link.url, "_blank", "noopener,noreferrer")}
                 >
-                  <span className="min-w-0 flex-1 whitespace-normal break-words leading-5">
+                  <span className="min-w-0 flex-1 whitespace-normal break-words leading-3 sm:leading-5">
                     {link.label}
                   </span>
-                  <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                  <ExternalLink className="mt-0.5 h-2 w-2 shrink-0 sm:h-3.5 sm:w-3.5" />
                 </Button>
               ))}
             </CardContent>
