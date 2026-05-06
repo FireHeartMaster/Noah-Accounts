@@ -56,22 +56,24 @@ export function LandingPage() {
       <HudBackground />
 
       <div className="relative mx-auto flex min-h-screen w-full max-w-[1500px] flex-col px-3 pb-3 pt-3 sm:px-4 sm:pb-4 sm:pt-4 lg:px-6 lg:pb-6">
-        <section className="mb-3 flex items-start justify-between gap-4 px-2 sm:mb-4">
-          <div className="space-y-2">
+        <section className="-mr-3 relative mb-3 flex flex-col gap-3 pl-2 pr-0 sm:mr-0 sm:mb-4 sm:flex-row sm:items-start sm:justify-between sm:gap-4 sm:px-2">
+          <div className="w-full space-y-2 pr-[11.5rem] sm:pr-0">
+            {/*
             <Badge className="animate-pulse-soft gap-2 border-cyan-100/20 bg-cyan-300/12">
               <Sparkles className="h-3.5 w-3.5" />
               {text.holographicWorldInterface}
             </Badge>
-            <div>
-              <h1 className="font-display text-sm uppercase tracking-[0.28em] text-cyan-50 sm:text-base">
+            */}
+            <div className="grid grid-cols-[minmax(0,44%)_minmax(0,56%)] items-start gap-2 sm:block">
+              <h1 className="min-w-0 font-display text-sm uppercase tracking-[0.28em] text-cyan-50 sm:text-base">
                 {text.globalSignalMap}
               </h1>
-              <p className="mt-1 max-w-2xl text-xs leading-6 text-cyan-50/62 sm:text-sm">
+              <p className="min-w-0 justify-self-end text-right text-[10px] leading-4 text-cyan-50/62 sm:mt-1 sm:max-w-2xl sm:justify-self-auto sm:text-left sm:text-sm sm:leading-6">
                 {text.dragZoomFilter}
               </p>
             </div>
           </div>
-          <div className="flex flex-col items-end gap-2">
+          <div className="absolute right-0 top-0 flex flex-col items-end gap-2 sm:static sm:w-auto">
             <div className="hidden rounded-full border border-cyan-300/15 bg-slate-950/35 px-4 py-2 text-[10px] uppercase tracking-[0.28em] text-cyan-100/56 backdrop-blur-xl sm:block">
               {text.interactive3dGlobe}
             </div>
