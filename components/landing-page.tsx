@@ -31,6 +31,57 @@ export function LandingPage() {
   const [frontMostRequestKey, setFrontMostRequestKey] = useState(0);
   const text = uiText(selectedLocale);
 
+  useEffect(() => {
+    if (typeof navigator === "undefined") {
+      return;
+    }
+
+    const supported = new Set<AppLocale>(LOCALE_OPTIONS.map((option) => option.value));
+    const requested = [...(navigator.languages ?? []), navigator.language].filter(
+      Boolean,
+    ) as string[];
+
+    const normalizeToSupported = (value: string): AppLocale | null => {
+      const trimmed = value.trim();
+
+      if (!trimmed) {
+        return null;
+      }
+
+      if (supported.has(trimmed as AppLocale)) {
+        return trimmed as AppLocale;
+      }
+
+      const lower = trimmed.toLowerCase();
+
+      if (lower.startsWith("pt")) {
+        return "pt-BR";
+      }
+
+      if (lower.startsWith("zh")) {
+        return "zh-CN";
+      }
+
+      const base = lower.split("-")[0];
+      const baseMatch = LOCALE_OPTIONS.find(
+        (option) => option.value.toLowerCase() === base,
+      );
+
+      return (baseMatch?.value as AppLocale | undefined) ?? null;
+    };
+
+    for (const language of requested) {
+      const mapped = normalizeToSupported(language);
+
+      if (mapped) {
+        setSelectedLocale(mapped);
+        return;
+      }
+    }
+
+    setSelectedLocale("en");
+  }, []);
+
   const visibleEntries = useMemo(
     () =>
       selectedRegion === "All"
